@@ -33,7 +33,7 @@ const showSlide = (index) => {
             subLine.innerHTML = "Ready to treat yourself? Add this to your cart and enjoy a delightful shopping experience!";
             break;
         case 2:
-            subLine.innerHTML ="<br>" + "Let’s Make It Yours!" + "<br>" ;
+            subLine.innerHTML = "Let’s Make It Yours!";
             break;
     }
 };
@@ -59,29 +59,30 @@ const previousSlide = () => {
     }
 };
 
-// Swipe handling for mobile devices
+// Improved swipe handling for mobile devices
 let touchStartX = 0;
 let touchEndX = 0;
+const swipeThreshold = 50; // Minimum distance in pixels to be considered a swipe
 
 const handleTouchStart = (event) => {
-    touchStartX = event.touches[0].clientX;
+    touchStartX = event.changedTouches[0].clientX;
 };
 
-const handleTouchMove = (event) => {
-    touchEndX = event.touches[0].clientX;
-};
+const handleTouchEnd = (event) => {
+    touchEndX = event.changedTouches[0].clientX;
 
-const handleTouchEnd = () => {
-    if (touchEndX < touchStartX - 50) {
+    // Calculate swipe distance and determine direction
+    let swipeDistance = touchEndX - touchStartX;
+
+    if (swipeDistance < -swipeThreshold) {
         // Swipe left to move to the next slide
         nextSlide();
-    } else if (touchEndX > touchStartX + 50) {
+    } else if (swipeDistance > swipeThreshold) {
         // Swipe right to move to the previous slide
         previousSlide();
     }
 };
 
-// Event listeners for swiping
+// Event listeners for swiping/
 sliderSection.addEventListener("touchstart", handleTouchStart);
-sliderSection.addEventListener("touchmove", handleTouchMove);
 sliderSection.addEventListener("touchend", handleTouchEnd);
