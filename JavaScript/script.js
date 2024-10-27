@@ -26,7 +26,7 @@ const showSlide = (index) => {
             subLine.innerHTML = "Always give people more than what they expect to get.";
             break;
         case 1:
-            subLine.innerHTML = "Ready to treat yourself? Add this to your cart and enjoy a delightful shopping experience!";
+            subLine.innerHTML = "Add this to your cart and enjoy a delightful shopping experience!";
             break;
         case 2:
             subLine.innerHTML = "Let’s Make It Yours!";
