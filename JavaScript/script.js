@@ -59,30 +59,36 @@ const previousSlide = () => {
     }
 };
 
-// Improved swipe handling for mobile devices
+// Swipe handling for mobile devices with debug logs
 let touchStartX = 0;
 let touchEndX = 0;
 const swipeThreshold = 50; // Minimum distance in pixels to be considered a swipe
 
 const handleTouchStart = (event) => {
     touchStartX = event.changedTouches[0].clientX;
+    console.log("Touch start X:", touchStartX); // Debug log for start point
 };
 
 const handleTouchEnd = (event) => {
     touchEndX = event.changedTouches[0].clientX;
+    console.log("Touch end X:", touchEndX); // Debug log for end point
 
-    // Calculate swipe distance and determine direction
     let swipeDistance = touchEndX - touchStartX;
+    console.log("Swipe distance:", swipeDistance); // Debug log for distance
 
     if (swipeDistance < -swipeThreshold) {
         // Swipe left to move to the next slide
+        console.log("Swiped left, going to next slide.");
         nextSlide();
     } else if (swipeDistance > swipeThreshold) {
         // Swipe right to move to the previous slide
+        console.log("Swiped right, going to previous slide.");
         previousSlide();
+    } else {
+        console.log("Swipe distance too small, no action taken.");
     }
 };
 
-// Event listeners for swiping/
+// Event listeners for swiping
 sliderSection.addEventListener("touchstart", handleTouchStart);
 sliderSection.addEventListener("touchend", handleTouchEnd);
