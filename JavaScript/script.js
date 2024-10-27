@@ -2,27 +2,26 @@ let sliderSection = document.querySelector(".slider");
 let slideItems = document.querySelectorAll(".slide-item");
 let indicators = document.querySelectorAll(".item-count");
 let subLine = document.getElementById("Sub_line");
-let nextButton = document.getElementById("slide_button");
 let currentIndex = 0;
 
-// Function to show slides based on the current index
+// Function to show the current slide based on the index
 const showSlide = (index) => {
+    if (index >= slideItems.length) {
+        // Hide the slider section when reaching beyond the last slide
+        sliderSection.style.display = "none";
+        return;
+    }
+
+    // Update slide display
     slideItems.forEach((slide, i) => {
-        if (i === index) {
-            slide.classList.add("disActive"); // Show the current slide
-        } else {
-            slide.classList.remove("disActive"); // Hide other slides
-        }
+        slide.classList.toggle("disActive", i === index);
+        slide.classList.toggle("disNone", i !== index);
     });
 
+    // Update indicator display
     indicators.forEach((indicator, i) => {
-        if (i === index) {
-            indicator.classList.remove("item_width_none");
-            indicator.classList.add("item_width_entence");
-        } else {
-            indicator.classList.add("item_width_none");
-            indicator.classList.remove("item_width_entence");
-        }
+        indicator.classList.toggle("item_width_entence", i === index);
+        indicator.classList.toggle("item_width_none", i !== index);
     });
 
     // Update the subtitle based on the current slide
@@ -31,10 +30,10 @@ const showSlide = (index) => {
             subLine.innerHTML = "Always give people more than what they expect to get.";
             break;
         case 1:
-            subLine.innerHTML = "Add this to your cart and enjoy a delightful shopping experience!";
+            subLine.innerHTML = "Ready to treat yourself? Add this to your cart and enjoy a delightful shopping experience!";
             break;
         case 2:
-            subLine.innerHTML = "<br>" + "Let’s Make It Yours!" + "<br>" ;
+            subLine.innerHTML ="<br>" + "Let’s Make It Yours!" + "<br>" ;
             break;
     }
 };
@@ -42,45 +41,47 @@ const showSlide = (index) => {
 // Initial setup to show the first item
 showSlide(currentIndex);
 
-// Function to handle slide transition
-const goToNextSlide = () => {
-    currentIndex++;
-    if (currentIndex >= slideItems.length) {
-        // If swiped past the last slide, hide the slider section
-        sliderSection.style.display = "none"; // Hide the slider section
+// Function to go to the next or previous slide
+const nextSlide = () => {
+    if (currentIndex < slideItems.length - 1) {
+        currentIndex++;
+        showSlide(currentIndex);
     } else {
+        // Hide slider if on the last slide
+        sliderSection.style.display = "none";
+    }
+};
+
+const previousSlide = () => {
+    if (currentIndex > 0) {
+        currentIndex--;
         showSlide(currentIndex);
     }
 };
 
-// Event listener for the next button
-nextButton.addEventListener("click", goToNextSlide);
+// Swipe handling for mobile devices
+let touchStartX = 0;
+let touchEndX = 0;
 
-// Function to handle swipe logic
-const handleSwipe = () => {
-    if (endX < startX - 50) {
-        // Swipe left
-        goToNextSlide();
-    } else if (endX > startX + 50) {
-        // Swipe right
-        if (currentIndex > 0) {
-            currentIndex--;
-            showSlide(currentIndex);
-        }
+const handleTouchStart = (event) => {
+    touchStartX = event.touches[0].clientX;
+};
+
+const handleTouchMove = (event) => {
+    touchEndX = event.touches[0].clientX;
+};
+
+const handleTouchEnd = () => {
+    if (touchEndX < touchStartX - 50) {
+        // Swipe left to move to the next slide
+        nextSlide();
+    } else if (touchEndX > touchStartX + 50) {
+        // Swipe right to move to the previous slide
+        previousSlide();
     }
 };
 
-// Variables to track swipe
-let startX = 0;
-let endX = 0;
-
-// Event listeners for touch events
-sliderSection.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-});
-
-sliderSection.addEventListener("touchmove", (e) => {
-    endX = e.touches[0].clientX;
-});
-
-sliderSection.addEventListener("touchend", handleSwipe);
+// Event listeners for swiping
+sliderSection.addEventListener("touchstart", handleTouchStart);
+sliderSection.addEventListener("touchmove", handleTouchMove);
+sliderSection.addEventListener("touchend", handleTouchEnd);
