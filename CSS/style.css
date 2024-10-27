@@ -21,17 +21,20 @@
     align-items: center;
     flex-flow: column;
 }
-.slide-item {
+.slide-item  {
     height: 45%;
     width: 80%;
-    background-color: var(--white);
-    border-radius: 15px;
-    box-shadow: 2px 3px 5px 0px #0000002f;
+    /* background-color: var(--white); */
+    /* border-radius: 15px; */
+    /* box-shadow: 2px 3px 5px 0px #0000002f; */
     display: none; /* Start with slides hidden */
     justify-content: center;
     align-items: center;
     font-size: 2rem;
     color: var(--highlight);
+}
+.slide-item img{
+transform: scale(0.5);
 }
 .disActive {
     display: flex; /* Active slide visible */
