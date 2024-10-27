@@ -1,6 +1,6 @@
 let sliderSection = document.querySelector(".slider");
+let loginSection = document.querySelector(".login");
 let slideItems = document.querySelectorAll(".slide-item");
-let indicators = document.querySelectorAll(".item-count");
 let subLine = document.getElementById("Sub_line");
 let currentIndex = 0;
 
@@ -9,6 +9,7 @@ const showSlide = (index) => {
     if (index >= slideItems.length) {
         // Hide the slider section when reaching beyond the last slide
         sliderSection.style.display = "none";
+        loginSection.style.display = "flex"; // Show the login section
         return;
     }
 
@@ -16,12 +17,6 @@ const showSlide = (index) => {
     slideItems.forEach((slide, i) => {
         slide.classList.toggle("disActive", i === index);
         slide.classList.toggle("disNone", i !== index);
-    });
-
-    // Update indicator display
-    indicators.forEach((indicator, i) => {
-        indicator.classList.toggle("item_width_entence", i === index);
-        indicator.classList.toggle("item_width_none", i !== index);
     });
 
     // Update the subtitle based on the current slide
@@ -38,10 +33,7 @@ const showSlide = (index) => {
     }
 };
 
-// Initial setup to show the first item
-showSlide(currentIndex);
-
-// Function to go to the next or previous slide
+// Function to go to the next slide
 const nextSlide = () => {
     if (currentIndex < slideItems.length - 1) {
         currentIndex++;
@@ -49,9 +41,11 @@ const nextSlide = () => {
     } else {
         // Hide slider if on the last slide
         sliderSection.style.display = "none";
+        loginSection.style.display = "flex"; // Show the login section
     }
 };
 
+// Function to go to the previous slide
 const previousSlide = () => {
     if (currentIndex > 0) {
         currentIndex--;
@@ -59,36 +53,44 @@ const previousSlide = () => {
     }
 };
 
-// Swipe handling for mobile devices with debug logs
+// Swipe handling for mobile devices
 let touchStartX = 0;
 let touchEndX = 0;
 const swipeThreshold = 50; // Minimum distance in pixels to be considered a swipe
 
 const handleTouchStart = (event) => {
     touchStartX = event.changedTouches[0].clientX;
-    console.log("Touch start X:", touchStartX); // Debug log for start point
 };
 
 const handleTouchEnd = (event) => {
     touchEndX = event.changedTouches[0].clientX;
-    console.log("Touch end X:", touchEndX); // Debug log for end point
-
     let swipeDistance = touchEndX - touchStartX;
-    console.log("Swipe distance:", swipeDistance); // Debug log for distance
 
     if (swipeDistance < -swipeThreshold) {
         // Swipe left to move to the next slide
-        console.log("Swiped left, going to next slide.");
         nextSlide();
     } else if (swipeDistance > swipeThreshold) {
         // Swipe right to move to the previous slide
-        console.log("Swiped right, going to previous slide.");
         previousSlide();
-    } else {
-        console.log("Swipe distance too small, no action taken.");
     }
 };
+
+// Show the slider section when the page loads
+sliderSection.style.display = "flex"; // Unhide the slider section
+loginSection.style.display = "none"; // Initially hide the login section
 
 // Event listeners for swiping
 sliderSection.addEventListener("touchstart", handleTouchStart);
 sliderSection.addEventListener("touchend", handleTouchEnd);
+
+// Handle back button click to reset the slider
+document.querySelector(".back_slider").addEventListener("click", () => {
+    // Reset index and display the first slide
+    currentIndex = 0;
+    sliderSection.style.display = "flex"; // Show slider again
+    loginSection.style.display = "none"; // Hide login section
+    showSlide(currentIndex); // Show the first slide
+});
+
+// Initial setup to show the first item
+showSlide(currentIndex);
