@@ -2,6 +2,7 @@ let sliderSection = document.querySelector(".slider");
 let loginSection = document.querySelector(".login");
 let slideItems = document.querySelectorAll(".slide-item");
 let subLine = document.getElementById("Sub_line");
+let itemCounts = document.querySelectorAll(".item-count");
 let currentIndex = 0;
 
 // Function to show the current slide based on the index
@@ -31,6 +32,12 @@ const showSlide = (index) => {
             subLine.innerHTML = "Let’s Make It Yours!";
             break;
     }
+
+    // Update item count visibility
+    itemCounts.forEach((count, i) => {
+        count.classList.toggle("item_width_entence", i === index);
+        count.classList.toggle("item_width_none", i !== index);
+    });
 };
 
 // Function to go to the next slide
@@ -76,7 +83,7 @@ const handleTouchEnd = (event) => {
 };
 
 // Show the slider section when the page loads
-sliderSection.style.display = "flex"; // Unhide the slider section
+sliderSection.style.display = "Flex"; // Unhide the slider section
 loginSection.style.display = "none"; // Initially hide the login section
 
 // Event listeners for swiping
@@ -87,7 +94,7 @@ sliderSection.addEventListener("touchend", handleTouchEnd);
 document.querySelector(".back_slider").addEventListener("click", () => {
     // Reset index and display the first slide
     currentIndex = 0;
-    sliderSection.style.display = "flex"; // Show slider again
+    sliderSection.style.display = "Flex"; // Show slider again
     loginSection.style.display = "none"; // Hide login section
     showSlide(currentIndex); // Show the first slide
 });
