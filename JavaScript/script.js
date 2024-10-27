@@ -83,7 +83,7 @@ const handleTouchEnd = (event) => {
 };
 
 // Show the slider section when the page loads
-sliderSection.style.display = "Flex"; // Unhide the slider section
+sliderSection.style.display = "flex"; // Unhide the slider section
 loginSection.style.display = "none"; // Initially hide the login section
 
 // Event listeners for swiping
@@ -94,7 +94,7 @@ sliderSection.addEventListener("touchend", handleTouchEnd);
 document.querySelector(".back_slider").addEventListener("click", () => {
     // Reset index and display the first slide
     currentIndex = 0;
-    sliderSection.style.display = "Flex"; // Show slider again
+    sliderSection.style.display = "flex"; // Show slider again
     loginSection.style.display = "none"; // Hide login section
     showSlide(currentIndex); // Show the first slide
 });
