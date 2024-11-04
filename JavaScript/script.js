@@ -1,26 +1,33 @@
-let sliderSection = document.querySelector(".slider");
+// Select DOM elements
 let loginSection = document.querySelector(".login");
+let sliderSection = document.querySelector(".slider");
 let slideItems = document.querySelectorAll(".slide-item");
-let subLine = document.getElementById("Sub_line");
+let subLine = document.getElementById("index-Sub_line");
 let itemCounts = document.querySelectorAll(".item-count");
 let currentIndex = 0;
 
-// Function to show the current slide based on the index
+// Function to show the current slide and update the subtitle
 const showSlide = (index) => {
+    // Hide the slider and show the login section if all slides have been shown
     if (index >= slideItems.length) {
-        // Hide the slider section when reaching beyond the last slide
         sliderSection.style.display = "none";
-        loginSection.style.display = "flex"; // Show the login section
-        return;
+        loginSection.style.display = "flex";
+        return; // Exit the function if we switched to the login section
     }
 
-    // Update slide display
+    // Update slide visibility
     slideItems.forEach((slide, i) => {
         slide.classList.toggle("disActive", i === index);
         slide.classList.toggle("disNone", i !== index);
     });
 
-    // Update the subtitle based on the current slide
+    // Update item counts visibility
+    itemCounts.forEach((count, i) => {
+        count.classList.toggle("item_width_entence", i === index);
+        count.classList.toggle("item_width_none", i !== index);
+    });
+
+    // Update subtitle text based on the slide index
     switch (index) {
         case 0:
             subLine.innerHTML = "Always give people more than what they expect to get.";
@@ -31,39 +38,28 @@ const showSlide = (index) => {
         case 2:
             subLine.innerHTML = "Let’s Make It Yours!";
             break;
+        default:
+            subLine.innerHTML = ""; // Clear text if needed
+            break;
     }
-
-    // Update item count visibility
-    itemCounts.forEach((count, i) => {
-        count.classList.toggle("item_width_entence", i === index);
-        count.classList.toggle("item_width_none", i !== index);
-    });
 };
 
 // Function to go to the next slide
 const nextSlide = () => {
-    if (currentIndex < slideItems.length - 1) {
-        currentIndex++;
-        showSlide(currentIndex);
-    } else {
-        // Hide slider if on the last slide
-        sliderSection.style.display = "none";
+    currentIndex++;
+    if (currentIndex >= slideItems.length) {
+        // If the last slide is reached, transition to the login section
+        sliderSection.style.display = "none"; // Hide the slider section
         loginSection.style.display = "flex"; // Show the login section
+        return; // Exit the function
     }
+    showSlide(currentIndex);
 };
 
-// Function to go to the previous slide
-const previousSlide = () => {
-    if (currentIndex > 0) {
-        currentIndex--;
-        showSlide(currentIndex);
-    }
-};
-
-// Swipe handling for mobile devices
+// Touch swipe functionality
 let touchStartX = 0;
 let touchEndX = 0;
-const swipeThreshold = 50; // Minimum distance in pixels to be considered a swipe
+const swipeThreshold = 50;
 
 const handleTouchStart = (event) => {
     touchStartX = event.changedTouches[0].clientX;
@@ -74,30 +70,51 @@ const handleTouchEnd = (event) => {
     let swipeDistance = touchEndX - touchStartX;
 
     if (swipeDistance < -swipeThreshold) {
-        // Swipe left to move to the next slide
-        nextSlide();
+        nextSlide(); // Swipe left
     } else if (swipeDistance > swipeThreshold) {
-        // Swipe right to move to the previous slide
-        previousSlide();
+        currentIndex--; // Swipe right
+        if (currentIndex < 0) {
+            currentIndex = 0; // Prevent going back beyond the first slide
+        }
+        showSlide(currentIndex);
     }
 };
 
-// Show the slider section when the page loads
-sliderSection.style.display = "flex"; // Unhide the slider section
-loginSection.style.display = "none"; // Initially hide the login section
+// Set up initial display state
+sliderSection.style.display = "flex"; 
+loginSection.style.display = "none"; 
+showSlide(currentIndex); // Show the initial slide
 
-// Event listeners for swiping
-sliderSection.addEventListener("touchstart", handleTouchStart);
-sliderSection.addEventListener("touchend", handleTouchEnd);
+// Add event listeners for slider navigation
+document.addEventListener("DOMContentLoaded", () => {
+    // Initially show the first slide
+    showSlide(currentIndex);
 
-// Handle back button click to reset the slider
-document.querySelector(".back_slider").addEventListener("click", () => {
-    // Reset index and display the first slide
-    currentIndex = 0;
-    sliderSection.style.display = "flex"; // Show slider again
-    loginSection.style.display = "none"; // Hide login section
-    showSlide(currentIndex); // Show the first slide
+    // Add event listeners to item counts for navigation
+    itemCounts.forEach((count, index) => {
+        count.addEventListener('click', () => {
+            currentIndex = index; // Change index based on clicked item
+            showSlide(currentIndex);
+        });
+    });
+
+    // Touch event listeners
+    sliderSection.addEventListener("touchstart", handleTouchStart);
+    sliderSection.addEventListener("touchend", handleTouchEnd);
+
+    // Back button listener for returning to slider
+    document.querySelector(".back_slider").addEventListener("click", () => {
+        currentIndex = 0;
+        sliderSection.style.display = "flex"; 
+        loginSection.style.display = "none"; 
+        showSlide(currentIndex); 
+    });
 });
 
-// Initial setup to show the first item
-showSlide(currentIndex);
+// Extra functionality for opening a section (e.g., for a name-gathering section)
+let opnerName = document.getElementById("openNameGattingOpner");
+let openNameGattingSection = document.getElementById("openNameGattingSection");
+
+opnerName.addEventListener("click", () => {
+    openNameGattingSection.style.display = "flex"; // Show the name-gathering section
+});

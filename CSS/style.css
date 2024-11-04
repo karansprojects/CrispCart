@@ -1,20 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=REM:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
 }
+
 :root {
     --theme: #E5E5E5;
     --theme-2: #FCA311;
     --text: #060606;
-    --highlight: #14213D; 
+    --highlight: #14213D;
     --black: #000;
     --white: #fff;
+    --optional: #8f8f8f;
     --f1: "Ubuntu", serif;
 
     /* login */
     --heightWidth: 55px;
+
+
+    --t1: all .25s linear;
+    --t2: all .55s linear;
+    --t3: all .85s linear;
 }
+
 .slider {
     height: 100vh;
     width: 100%;
@@ -23,25 +32,34 @@
     justify-content: center;
     align-items: center;
     flex-flow: column;
+
 }
-.slide-item  {
+
+.slide-item {
     height: 45%;
     width: 80%;
-    /* background-color: var(--white); */
-    /* border-radius: 15px; */
-    /* box-shadow: 2px 3px 5px 0px #0000002f; */
-    display: none; /* Start with slides hidden */
+    display: none;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-    color: var(--highlight);
+    background-color: transparent; 
+    border: none;
+    outline: none;
 }
-.slide-item img{
-transform: scale(0.5);
+.slide-item video {
+    width: 80%;
+    height: 80%;
+    object-fit:contain; 
+    border: none;
+    outline: none;
+    box-shadow: none;
 }
+
+
 .disActive {
-    display: flex; /* Active slide visible */
+    display: flex;
 }
+
 #Sub_line {
     font-size: 20px;
     font-family: var(--f1);
@@ -50,6 +68,7 @@ transform: scale(0.5);
     padding: 10% 10% 5% 10%;
     text-align: center;
 }
+
 .item-count-chaker {
     height: 2vh;
     width: 40%;
@@ -59,6 +78,7 @@ transform: scale(0.5);
     padding: 4% 2% 5% 5%;
     gap: 10px;
 }
+
 .item-count {
     height: 70%;
     width: 25%;
@@ -67,14 +87,17 @@ transform: scale(0.5);
     opacity: 70%;
     transition: all 0.3s ease;
 }
+
 .item_width_entence {
     width: 45%;
     opacity: 100%;
 }
+
 .item_width_none {
     width: 25%;
     opacity: 70%;
 }
+
 #slide_button {
     display: flex;
     justify-content: center;
@@ -86,6 +109,7 @@ transform: scale(0.5);
     box-shadow: 2px 3px 5px 0px #0000002f;
     margin: 6% 0 5% 0;
 }
+
 #slide_button i {
     padding: 30px;
     font-size: 30px;
@@ -103,7 +127,8 @@ transform: scale(0.5);
     flex-flow: column;
     font-family: var(--f1);
 }
-.login header{
+
+.login header {
     height: 30vh;
     width: 100%;
     background-color: var(--theme-2);
@@ -115,7 +140,8 @@ transform: scale(0.5);
     align-items: center;
     flex-flow: column;
 }
-.login header button{
+
+.login header button {
     height: var(--heightWidth);
     width: var(--heightWidth);
     display: flex;
@@ -128,41 +154,63 @@ transform: scale(0.5);
     border-radius: 50px;
     border: none;
     outline: none;
+    transition: var(--t1);
 }
-.login header h1{   
+
+.login header button:active {
+    transform: scale(0.8);
+}
+
+.login header h1 {
     font-size: 60px;
-     font-weight: 300;
+    font-weight: 300;
     padding: 0 0 5px 0;
 }
-.login header p{
-    margin-bottom: 5%;
+
+.login header p {
+    margin-bottom: 15px;
 }
-.login form{
+
+.login form {
     height: 70vh;
-    width: 100%;
+    width: 80%;
     background-color: var(--theme);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-flow: column;
+    /* background-color: red; */
+    box-sizing: border-box;
+    /* Added */
 }
-.login form > input{
+
+.login form a {
+    text-decoration: none;
+    color: var(--text);
+}
+
+.login form>input,
+.openNameGattingSection form input {
     height: 50px;
-    width: 80%;
+    width: 100%;
     border-radius: 8px;
-    /* box-shadow: 0px -10px 0px 10px var(--white); */
-font-size: 18px;
-padding: 0px 10px;
-margin: 15px 0;
-border: none;
-outline: none;
-position: relative;
-z-index: 1;
-color:var(--text);
+    font-size: 18px;
+    padding: 10px;
+    /* Adjusted padding to avoid overflow */
+    margin: 15px 0;
+    border: none;
+    outline: none;
+    position: relative;
+    z-index: 1;
+    color: var(--text);
+    box-sizing: border-box;
+    /* Added */
 }
-.lable{
+
+
+.login .lable {
     /* height: 0px; */
-    width: 85%;
+    width: 100%;
     z-index: 2;
     font-size: 20px;
     /* background-color: #000; */
@@ -171,20 +219,28 @@ color:var(--text);
     display: flex;
     justify-content: start;
     align-items: center;
-    color:var(--text);
-    
+    color: var(--text);
+
 }
-.chakeBoxAndForgot{
-    width: 84%;
+
+.chakeBoxAndForgot {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color:var(--text);
+    color: var(--text);
 
 }
-.loginBtn{
-    height: 10%;
-    width: 85%;
+
+.chakeBoxAndForgot span:nth-child(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginBtn {
+    height: 50px;
+    width: 100%;
     font-size: 20px;
     border-radius: 8px;
     border: none;
@@ -193,54 +249,130 @@ color:var(--text);
     background-color: var(--theme-2);
     color: var(--text);
 }
-.singOut{
+
+.singOut {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-.singOut hr{
+
+.singOut hr {
     height: .51px;
-    width: 90px;
+    width: 80px;
     border: none;
     background-color: var(--highlight);
     opacity: 80%;
 }
-.singOut span{
+
+.singOut span {
     padding: 0px 15px;
 }
-.googleAndFecbookLogin{
+
+.googleAndFecbookLogin {
     height: 90px;
-    width: 85%;
+    width: 100%;
     /* background-color: blue; */
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-.googleAndFecbookLogin button{
+
+.styleButton:active {
+    transform: scale(0.8);
+    background-color: #0065f7;
+}
+
+.googleAndFecbookLogin button {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 15px 15px;
     font-size: 20px;
     border-radius: 16px;
     border: none;
     outline: none;
+    transition: var(--t1);
+    height: 55px;
+    width: 45%;
 }
-.googleAndFecbookLogin button:nth-child(2){
-    background-color:#0065f7;
+
+.googleAndFecbookLogin button:nth-child(1) {
+    background-color: #fff;
+    color: var(--black);
+}
+
+.googleAndFecbookLogin button:nth-child(2) {
+    background-color: #0065f7;
     color: var(--white);
 }
-.googleAndFecbookLogin button p{
+
+.googleAndFecbookLogin button p {
     margin-left: 5px;
     font-weight: 500;
 }
-.fecbook,.google{
+
+.fecbook,
+.google {
     height: 30px;
 
 }
-.fecbook{
+
+.fecbook {
     filter: invert(1);
 }
-.login form > p{
-margin-bottom: 10px;
+
+.login form>p {
+    margin-bottom: 10px;
+}
+
+.openNameGattingSection {
+    height: 100vh;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    font-family: var(--f1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.openNameGattingSection form {
+    height: auto;
+    width: 60%;
+    /* background-color: #0065f7; */
+    padding: 34px 25px 10px 25px;
+    border-radius: 20px;
+    background: #ffffff66;
+    box-shadow: 0 8px 32px 0 #1f26875e;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid #ffffff2e;
+}
+
+.openNameGattingSection form label {
+    /* height: 0px; */
+    width: 100%;
+    z-index: 2;
+    font-size: 20px;
+    /* background-color: #000; */
+    padding: 0px 0px;
+    margin: 0;
+    color: var(--text);
+
+}
+
+.group-age-time {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 10px;
+}
+
+.optional {
+    color: var(--optional);
 }
